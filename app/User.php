@@ -20,7 +20,7 @@ class User extends Model implements
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'first_name', 'last_name', 'email', 'role', 'card_id'
     ];
 
     /**
