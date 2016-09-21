@@ -12,6 +12,6 @@ class Reservation extends Model
      * @var array
      */
     protected $fillable = [
-        'item_id', 'checkout_time', 'checkin_time'
+        'user_id', 'item_id', 'checkout_time', 'checkin_time'
     ];
 }

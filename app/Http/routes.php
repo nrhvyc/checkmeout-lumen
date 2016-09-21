@@ -14,3 +14,7 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->get('checkout', 'ApiController@checkout');
+
+$app->get('checkin', 'ApiController@checkin');
