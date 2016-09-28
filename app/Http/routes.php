@@ -15,6 +15,12 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
+// Kiosk API Endpoints
 $app->get('checkout', 'ApiController@checkout');
-
 $app->get('checkin', 'ApiController@checkin');
+
+// User Endpoints
+$app->get('user/checked_out_items', 'UserController@checkedOutItems');
+
+// Store Endpoints
+$app->get('store/users', 'StoreController@users');
