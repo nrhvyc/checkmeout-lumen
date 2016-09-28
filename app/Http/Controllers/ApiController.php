@@ -52,7 +52,7 @@ class ApiController extends Controller
                                                   ->first();
 
                         // Insert Reservation If Item Not Checked Out Currently
-                        if (!$reservation || !$reservation->checkin_time) {
+                        if (!$reservation || $reservation->checkin_time != NULL) {
                             Reservation::create(['user_id' => $user->id,
                                                  'item_id' => $item->id,
                                                  'checkout_time' => $datetime]);
