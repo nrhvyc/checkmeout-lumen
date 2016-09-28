@@ -31,4 +31,9 @@ class User extends Model implements
     protected $hidden = [
         'password',
     ];
+
+    //Relationships
+    public function stores() {
+        return $this->belongsToMany('App\Store');
+    }
 }
