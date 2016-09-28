@@ -52,7 +52,7 @@ class ApiController extends Controller
                                                   ->first();
 
                         // Insert Reservation If Item Not Checked Out Currently
-                        if (!$reservation || ($reservation && !$reservation->checkin_time)) {
+                        if (!$reservation || !$reservation->checkin_time) {
                             Reservation::create(['user_id' => $user->id,
                                                  'item_id' => $item->id,
                                                  'checkout_time' => $datetime]);
@@ -105,7 +105,7 @@ class ApiController extends Controller
         $store = Store::where('id', $sid)->first();
 
         // Set Current Time
-        $datetime = date("Y-M-D H:i:s");
+        $datetime = date("Y-m-d H:i:s");
 
         // Validate Store Exist
         if ($store) {
