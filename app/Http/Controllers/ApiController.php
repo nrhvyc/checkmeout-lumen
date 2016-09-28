@@ -21,19 +21,19 @@ class ApiController extends Controller
         $uid = $request->input('UID');  // User ID
         $item_tags = json_decode($request->input('items'));
 
-        // Initialive Status Stats
+        // Initialize Status Stats
         $items_saved = 0;
         $items_failed = 0;
-        
+
         // Retrieve User
         $user = User::where('card_id', $uid)->first();
 
         // Retrieve Store
         $store = Store::where('id', $sid)->first();
-        
+
         // Set Current Time
         $datetime = date("Y-m-d H:i:s");
-        
+
         // Validate Store Exist
         if ($store) {
             // Validate User Exist For Card ID
@@ -52,7 +52,7 @@ class ApiController extends Controller
                                                   ->first();
 
                         // Insert Reservation If Item Not Checked Out Currently
-                        if(!$reservation && $reservation->checkin_time) {
+                        if (!$reservation || $reservation->checkin_time != NULL) {
                             Reservation::create(['user_id' => $user->id,
                                                  'item_id' => $item->id,
                                                  'checkout_time' => $datetime]);
@@ -89,7 +89,72 @@ class ApiController extends Controller
      * @return JSON
      */
     public function checkin(Request $request) {
-        
+        // Grab Data From Request
+        $sid = $request->input('SID');  // Store ID
+        $uid = $request->input('UID');  // User ID
+        $item_tags = json_decode($request->input('items'));
+
+        // Initialize Status Stats
+        $items_updated = 0;
+        $items_failed = 0;
+
+        // Retrieve User
+        $user = User::where('card_id', $uid)->first();
+
+        // Retrieve Strore
+        $store = Store::where('id', $sid)->first();
+
+        // Set Current Time
+        $datetime = date("Y-m-d H:i:s");
+
+        // Validate Store Exist
+        if ($store) {
+            // Validate User Exists for Card ID
+            if ($user) {
+                foreach ($item_tags as $item_tag) {
+                    // Retrieve Item
+                    $item = Item::where('tag_id', $item_tag)->first();
+
+                    // Update reservation if Item Exists
+                    if ($item) {
+                        // Before updating reservation check in time, check
+                        // if actually checked out
+                        $reservation = Reservation::where('user_id', $user->id)
+                                                  ->where('item_id', $item->id)
+                                                  ->orderBy('checkout_time', 'desc')
+                                                  ->first();
+
+                        // Update reservation check in time if currently
+                        // checked Out and reservation exists
+                        if ($reservation && !$reservation->checkin_time) {
+                            Reservation::where('user_id', $user->id)
+                                       ->where('item_id', $item->id)
+                                       ->update(['checkin_time' => $datetime]);
+                            $items_updated++;
+                        }
+                        else {
+                            $items_failed++;
+                        }
+                    }
+                    else {
+                        $items_failed++;
+                    }
+                }
+                $status = 'success';
+            }
+            else {
+                $status = 'failed: invalid uid';
+            }
+        }
+        else {
+            $status = 'failed: invalid sid';
+        }
+
+        $response = ['status' => $status,
+                     'items_updated' => $items_updated,
+                     'items_failed' => $items_failed];
+
+        return response()->json($response);
     }
 
     /**
