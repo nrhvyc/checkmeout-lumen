@@ -99,7 +99,7 @@ class ApiController extends Controller
         $items_failed = 0;
 
         // Retrieve User
-        $user = User:where('card_id', $uid)->first();
+        $user = User::where('card_id', $uid)->first();
 
         // Retrieve Strore
         $store = Store::where('id', $sid)->first();
@@ -151,7 +151,7 @@ class ApiController extends Controller
         }
 
         $response = ['status' => $status,
-                     'items_saved' => $items_saved,
+                     'items_updated' => $items_updated,
                      'items_failed' => $items_failed];
 
         return response()->json($response);
