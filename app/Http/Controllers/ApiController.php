@@ -126,7 +126,7 @@ class ApiController extends Controller
 
                         // Update reservation check in time if currently
                         // checked Out and reservation exists
-                        if ($reservation && !$reservation->checkin_time) {
+                        if ($reservation && $reservation->checkin_time == NULL) {
                             Reservation::where('user_id', $user->id)
                                        ->where('item_id', $item->id)
                                        ->update(['checkin_time' => $datetime]);
