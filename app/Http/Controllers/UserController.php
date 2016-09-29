@@ -10,6 +10,10 @@ use App\Reservation;
 
 class UserController extends Controller
 {
+    use RestControllerTrait;
+    const MODEL = 'App\User';
+    protected $validationRules = [];
+
     /**
      * Return items for a specific item id
      *

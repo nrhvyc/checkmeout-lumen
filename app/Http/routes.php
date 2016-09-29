@@ -11,16 +11,36 @@
 |
 */
 
+function rest($path, $controller)
+{
+    global $app;
+    
+    $app->get($path, $controller.'@index');
+    $app->get($path.'/show/{id}', $controller.'@show');
+    $app->get($path + '/save', $controller.'@save');
+    $app->put($path.'/update/{id}', $controller.'@update');
+    $app->delete($path.'/delete/{id}', $controller.'@delete');
+}
+
 $app->get('/', function () use ($app) {
     return $app->version();
 });
 
-// Kiosk API Endpoints
+// Kiosk API Endpoint Routes
 $app->get('checkout', 'ApiController@checkout');
 $app->get('checkin', 'ApiController@checkin');
 
-// User Endpoints
+// User Endpoint Routes
 $app->get('user/checked_out_items', 'UserController@checkedOutItems');
+rest('/user', 'UserController');
 
-// Store Endpoints
+// Store Endpoint Routes
 $app->get('store/users', 'StoreController@users');
+rest('/store', 'StoreController');
+
+// Reservation Endpoint Routes
+rest('/reservation', 'ReservationController');
+
+// Item Endpoint Routes
+rest('/item', 'ItemController');
+

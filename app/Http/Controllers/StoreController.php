@@ -10,6 +10,10 @@ use App\Reservation;
 
 class StoreController extends Controller
 {
+    use RestControllerTrait;
+    const MODEL = 'App\Store';
+    protected $validationRules = [];
+
     /**
      * Return users for a specific store id
      *
