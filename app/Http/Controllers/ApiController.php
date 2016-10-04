@@ -22,8 +22,8 @@ class ApiController extends Controller
         $item_tags = json_decode($request->input('items'));
 
         // Initialize Status Stats
-        $items_saved = 0;
-        $items_failed = 0;
+        $items_saved = [];
+        $items_failed = [];
 
         // Retrieve User
         $user = User::where('card_id', $uid)->first();
@@ -56,14 +56,21 @@ class ApiController extends Controller
                             Reservation::create(['user_id' => $user->id,
                                                  'item_id' => $item->id,
                                                  'checkout_time' => $datetime]);
-                            $items_saved++;
+                            // Add Item To Succeeded Response
+                            array_push($items_saved, ['item_tag' => $item_tag,
+                                                      'item_name'=> $item->name]);
                         }
                         else {
-                            $items_failed++;
+                            // Add Item To Failed Response
+                            array_push($items_failed, ['item_tag' => $item_tag,
+                                                       'item_name'=> $item->name,
+                                                       'reason' => 'item already checked out']);
                         }
                     }
                     else {
-                        $items_failed++;
+                        // Add Item To Failed Response
+                        array_push($items_failed, ['item_tag' => $item_tag,
+                                                   'reason' => 'item tag does not match an item']);
                     }
                 }
                 $status = 'success';
@@ -95,8 +102,8 @@ class ApiController extends Controller
         $item_tags = json_decode($request->input('items'));
 
         // Initialize Status Stats
-        $items_updated = 0;
-        $items_failed = 0;
+        $items_updated = [];
+        $items_failed = [];
 
         // Retrieve User
         $user = User::where('card_id', $uid)->first();
@@ -130,14 +137,21 @@ class ApiController extends Controller
                             Reservation::where('user_id', $user->id)
                                        ->where('item_id', $item->id)
                                        ->update(['checkin_time' => $datetime]);
-                            $items_updated++;
+                            // Add Item To Succeeded Response
+                            array_push($items_updated, ['item_tag' => $item_tag,
+                                                        'item_name'=> $item->name]);
                         }
                         else {
-                            $items_failed++;
+                            // Add Item To Failed Response
+                            array_push($items_failed, ['item_tag' => $item_tag,
+                                                       'item_name'=> $item->name,
+                                                       'reason' => 'item already checked in']);
                         }
                     }
                     else {
-                        $items_failed++;
+                        // Add Item To Failed Response
+                        array_push($items_failed, ['item_tag' => $item_tag,
+                                                   'reason' => 'item tag does not match an item']);
                     }
                 }
                 $status = 'success';
