@@ -36,4 +36,8 @@ class User extends Model implements
     public function stores() {
         return $this->belongsToMany('App\Store');
     }
+
+    public function reservations() {
+        return $this->hasMany('App\Reservations');
+    }
 }

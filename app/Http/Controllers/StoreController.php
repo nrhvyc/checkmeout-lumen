@@ -29,7 +29,6 @@ class StoreController extends Controller
         // Validate Store Exist
         if ($store) {
             $users = $store->users;
-            dd($users);
 
             $status = 'success';
         }
@@ -38,7 +37,7 @@ class StoreController extends Controller
         }
 
         $response = ['status' => $status,
-                     'items' => $items];
+                     'items' => $users];
 
         return response()->json($response);
     }
