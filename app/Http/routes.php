@@ -32,6 +32,7 @@ $app->get('checkin', 'ApiController@checkin');
 
 // User Endpoint Routes
 $app->get('user/checked_out_items', 'UserController@checkedOutItems');
+$app->get('user/reservations', 'UserController@reservations');
 rest('/user', 'UserController');
 
 // Store Endpoint Routes
