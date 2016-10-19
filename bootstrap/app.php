@@ -60,11 +60,12 @@ $app->singleton(
 */
 
 // $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
+//    App\Http\Middleware\CheckGoogleOAuth::class,
 // ]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'google_oauth' => App\Http\Middleware\CheckGoogleOAuth::class,
 ]);
 
 /*

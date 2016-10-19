@@ -11,17 +11,6 @@
 |
 */
 
-function rest($path, $controller)
-{
-    global $app;
-    
-    $app->get($path, $controller.'@index');
-    $app->get($path.'/show/{id}', $controller.'@show');
-    $app->get($path + '/save', $controller.'@save');
-    $app->put($path.'/update/{id}', $controller.'@update');
-    $app->delete($path.'/delete/{id}', $controller.'@delete');
-}
-
 $app->get('/', function () use ($app) {
     return $app->version();
 });
@@ -30,17 +19,32 @@ $app->get('/', function () use ($app) {
 $app->get('checkout', 'ApiController@checkout');
 $app->get('checkin', 'ApiController@checkin');
 
-// User Endpoint Routes
-$app->get('user/checked_out_items', 'UserController@checkedOutItems');
-rest('/user', 'UserController');
 
-// Store Endpoint Routes
-$app->get('store/users', 'StoreController@users');
-rest('/store', 'StoreController');
+$app->group(['middleware' => 'google_oauth'], function () use ($app) {
 
-// Reservation Endpoint Routes
-rest('/reservation', 'ReservationController');
+    function rest($path, $controller)
+    {
+        global $app;
+        
+        $app->get($path, $controller.'@index');
+        $app->get($path.'/show/{id}', $controller.'@show');
+        $app->get($path + '/save', $controller.'@save');
+        $app->put($path.'/update/{id}', $controller.'@update');
+        $app->delete($path.'/delete/{id}', $controller.'@delete');
+    }
 
-// Item Endpoint Routes
-rest('/item', 'ItemController');
+    // User Endpoint Routes
+    $app->get('user/checked_out_items', 'UserController@checkedOutItems');
+    rest('/user', 'UserController');
 
+    // Store Endpoint Routes
+    $app->get('store/users', 'StoreController@users');
+    rest('/store', 'StoreController');
+
+    // Reservation Endpoint Routes
+    rest('/reservation', 'ReservationController');
+
+    // Item Endpoint Routes
+    rest('/item', 'ItemController');
+
+});
