@@ -201,6 +201,7 @@ class ApiController extends Controller
       // Has this user logged in before? If not create the user
       $user = User::firstOrNew(['email' => $request->input('email')]);
       $user->id_token = $request->input('id_token');
+      $user->save();
 
       $response = [
         'code' => 200,
