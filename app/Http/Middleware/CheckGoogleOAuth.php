@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use GuzzleHttp\Client;
+use App\User;
 
 class CheckGoogleOAuth
 {
@@ -18,7 +19,19 @@ class CheckGoogleOAuth
     {
         if ($request->has(id_token)) {
             if (self::verifyGoogle($request->input(id_token))) {
-                return $next($request);
+                // Does this google token id match a user in the database?
+                if (User::where('id_token', $request->input(id_token))->count() > 0) {
+                   return $next($request);
+                }
+                else {
+                    $response = [
+                    'code' => 401,
+                    'status' => 'Unauthorized',
+                    'data' => [],
+                    'message' => 'Authorization Required'
+                    ];
+                    return response()->json($response, $response['code']);
+                }
             }
             else {
                 $response = [
@@ -46,7 +59,7 @@ class CheckGoogleOAuth
     /**
      * Hit the Google endpoint and verify the token
      *
-     * @param  id_token
+     * @param  string id_token
      * @return boolean
      */
     private function verifyGoogle($id_token) {
