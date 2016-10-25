@@ -178,7 +178,7 @@ class ApiController extends Controller
      * @return JSON
      */
     public function login(Request $request) {
-      if (!request->has('email')) {
+      if (!$request->has('email')) {
         $response = [
           'code' => 400,
           'status' => 'Bad Request',
@@ -188,7 +188,7 @@ class ApiController extends Controller
         return response()->json($response);
       }
 
-      if (!request->has('id_token')) {
+      if (!$request->has('id_token')) {
         $response = [
           'code' => 400,
           'status' => 'Bad Request',
@@ -199,8 +199,8 @@ class ApiController extends Controller
       }
 
       // Has this user logged in before? If not create the user
-      $user = User::firstOrNew(['email' => request->input('email')]);
-      $user->id_token = request->input('id_token');
+      $user = User::firstOrNew(['email' => $request->input('email')]);
+      $user->id_token = $request->input('id_token');
 
       $response = [
         'code' => 200,

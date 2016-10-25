@@ -9,13 +9,13 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+// use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Model implements
     AuthenticatableContract,
     AuthorizableContract
 {
-    use Authenticatable, Authorizable, HasApiTokens, Notifiable;
+    use Authenticatable, Authorizable, HasApiTokens;//, Notifiable;
 
     /**
      * The attributes that are mass assignable.
