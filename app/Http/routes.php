@@ -24,7 +24,8 @@ $app->get('checkin', 'ApiController@checkin');
 $app->get('login', 'ApiController@login');
 
 
-$app->group(['middleware' => 'google_oauth'], function () use ($app) {
+$app->group(['middleware' => 'google_oauth', 
+             'namespace'=>'App\Http\Controllers'], function () use ($app) {
 
     function rest($path, $controller)
     {

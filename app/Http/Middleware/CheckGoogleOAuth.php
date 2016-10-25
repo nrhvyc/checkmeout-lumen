@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as Guzzle;
 use App\User;
 
 class CheckGoogleOAuth
@@ -17,11 +17,11 @@ class CheckGoogleOAuth
      */
     public function handle($request, Closure $next)
     {
-        if ($request->has(id_token)) {
-            if (self::verifyGoogle($request->input(id_token))) {
+        if ($request->has('id_token')) {
+            if (self::verifyGoogle($request->input('id_token'))) {
                 // Does this google token id match a user in the database?
-                if (User::where('id_token', $request->input(id_token))->count() > 0) {
-                   return $next($request);
+                if (User::where('id_token', $request->input('id_token'))->count() > 0) {
+                    return $next($request);
                 }
                 else {
                     $response = [
@@ -63,9 +63,8 @@ class CheckGoogleOAuth
      * @return boolean
      */
     private function verifyGoogle($id_token) {
-        $client = new GuzzleHttp\Client();
-        $res = $client->get('https://www.googleapis.com/oauth2/v3/tokeninfo', 
-                            ['id_token' =>  $tokeninfo]);
+        $client = new Guzzle(['base_uri' => 'https://www.googleapis.com/oauth2/v3/']);
+        $res = $client->request('GET', 'tokeninfo?id_token=' . $id_token);
         if ($res->getStatusCode() == 200) {
             return True;
         }
