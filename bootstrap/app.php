@@ -23,7 +23,7 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->withFacades();
 
 $app->withEloquent();
 
@@ -60,12 +60,13 @@ $app->singleton(
 */
 
 // $app->middleware([
-//    App\Http\Middleware\ExampleMiddleware::class
+//    App\Http\Middleware\CheckGoogleOAuth::class,
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+    'google_oauth' => App\Http\Middleware\CheckGoogleOAuth::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,8 @@ $app->singleton(
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

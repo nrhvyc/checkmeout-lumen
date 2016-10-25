@@ -161,6 +161,46 @@ class ApiController extends Controller
     }
 
     /**
+     * User logging in needs their id_token provided by
+     * Google to be updated in the database because they change
+     *
+     * @return JSON
+     */
+    public function login(Request $request) {
+      if (!$request->has('email')) {
+        $response = [
+          'code' => 400,
+          'status' => 'Bad Request',
+          'data' => [],
+          'message' => 'email not provided'
+        ];
+        return response()->json($response);
+      }
+
+      if (!$request->has('id_token')) {
+        $response = [
+          'code' => 400,
+          'status' => 'Bad Request',
+          'data' => [],
+          'message' => 'id_token not provided'
+        ];
+        return response()->json($response);
+      }
+
+      // Has this user logged in before? If not create the user
+      $user = User::firstOrNew(['email' => $request->input('email')]);
+      $user->id_token = $request->input('id_token');
+      $user->save();
+
+      $response = [
+        'code' => 200,
+        'status' => 'Successful'
+      ];
+
+      return response()->json($response);
+    }
+
+    /**
      * Determine whether item is currently checked out
      *
      * @return Boolean
