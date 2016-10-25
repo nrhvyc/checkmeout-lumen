@@ -185,6 +185,7 @@ class ApiController extends Controller
           'data' => [],
           'message' => 'email not provided'
         ];
+        return response()->json($response);
       }
 
       if (!request->has('id_token')) {
@@ -194,11 +195,17 @@ class ApiController extends Controller
           'data' => [],
           'message' => 'id_token not provided'
         ];
+        return response()->json($response);
       }
 
       // Has this user logged in before? If not create the user
       $user = User::firstOrNew(['email' => request->input('email')]);
       $user->id_token = request->input('id_token');
+
+      $response = [
+        'code' => 200,
+        'status' => 'Successful'
+      ];
 
       return response()->json($response);
     }
