@@ -16,12 +16,13 @@ $app->get('/', function () use ($app) {
 });
 
 // Kiosk API Endpoint Routes
-$app->group(['prefix' => 'kiosk'], function () {
+$app->group(['prefix'     => 'kiosk',
+             'namespace'  => 'App\Http\Controllers'], function () use ($app) {
     $app->get('checkout', 'ApiController@checkout');
     $app->get('checkin', 'ApiController@checkin');
 
     $app->get('reservation', 'ReservationController@index');
-    $app->get('item', 'ReservationController@index');
+    $app->get('item', 'ItemController@index');
 });
 
 
@@ -29,7 +30,7 @@ $app->group(['prefix' => 'kiosk'], function () {
 $app->get('login', 'ApiController@login');
 
 // For use with the web app
-$app->group(['middleware' => 'google_oauth', 
+$app->group(['middleware' => 'google_oauth',
              'namespace'  => 'App\Http\Controllers'], function () use ($app) {
 
     function rest($path, $controller)
