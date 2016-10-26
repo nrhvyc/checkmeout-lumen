@@ -24,13 +24,13 @@ $app->get('checkin', 'ApiController@checkin');
 $app->get('login', 'ApiController@login');
 
 
-$app->group(['middleware' => 'google_oauth', 
+$app->group(['middleware' => 'google_oauth',
              'namespace'=>'App\Http\Controllers'], function () use ($app) {
 
     function rest($path, $controller)
     {
         global $app;
-        
+
         $app->get($path, $controller.'@index');
         $app->get($path.'/show/{id}', $controller.'@show');
         $app->get($path + '/save', $controller.'@save');
@@ -45,6 +45,7 @@ $app->group(['middleware' => 'google_oauth',
 
     // Store Endpoint Routes
     $app->get('store/users', 'StoreController@users');
+    $app->get('store/add_user', 'StoreController@addUser')
     $app->get('user/checked_out_items', 'UserController@checkedOutItems');
     $app->get('user/reservations', 'UserController@reservations');
     rest('/store', 'StoreController');
