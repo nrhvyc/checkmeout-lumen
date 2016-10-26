@@ -16,16 +16,22 @@ $app->get('/', function () use ($app) {
 });
 
 // Kiosk API Endpoint Routes
-$app->get('checkout', 'ApiController@checkout');
-$app->get('checkin', 'ApiController@checkin');
+$app->group(['prefix'     => 'kiosk',
+             'namespace'  => 'App\Http\Controllers'], function () use ($app) {
+    $app->get('checkout', 'ApiController@checkout');
+    $app->get('checkin', 'ApiController@checkin');
+
+    $app->get('reservation', 'ReservationController@index');
+    $app->get('item', 'ItemController@index');
+});
 
 
 // Used by frontend app to login with passed email and google token id
 $app->get('login', 'ApiController@login');
 
-
+// For use with the web app
 $app->group(['middleware' => 'google_oauth',
-             'namespace'=>'App\Http\Controllers'], function () use ($app) {
+             'namespace'  => 'App\Http\Controllers'], function () use ($app) {
 
     function rest($path, $controller)
     {
