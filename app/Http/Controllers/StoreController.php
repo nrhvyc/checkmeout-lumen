@@ -54,10 +54,10 @@ class StoreController extends Controller
             $user_id = $request->input('user_id');
 
             // Retrieve Store
-            $store = Store::where('store_id', $store_id)->first();
+            $store = Store::where('id', $store_id)->first();
 
             // Retieve User
-            $user = User::where('user_id', $user_id)->first();
+            $user = User::where('id', $user_id)->first();
 
             // NEED TO VALIDATE THE USER HAS RIGHTS TO ADD THIS
             if ($user && $store) {
