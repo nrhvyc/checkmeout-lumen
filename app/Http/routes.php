@@ -22,7 +22,7 @@ $app->group(['prefix' => 'kiosk'], function () {
 
     $app->get('reservation', 'ReservationController@index');
     $app->get('item', 'ReservationController@index');
-}
+});
 
 
 // Used by frontend app to login with passed email and google token id
