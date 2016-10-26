@@ -40,6 +40,7 @@ $app->group(['middleware' => 'google_oauth',
 
     // User Endpoint Routes
     $app->get('user/checked_out_items', 'UserController@checkedOutItems');
+    $app->get('user/stores', 'UserController@stores');
     rest('/user', 'UserController');
 
     // Store Endpoint Routes

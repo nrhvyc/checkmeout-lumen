@@ -59,7 +59,7 @@ class UserController extends Controller
         
         // Validate User Exist
         if ($user) {
-            // Retrieve Items For User Not Checked In
+            // Retrieve Reservations For User
             $reservations = $user->reservations;
             $status = 'success';
         }
@@ -69,6 +69,34 @@ class UserController extends Controller
 
         $response = ['status' => $status,
                      'reservations' => $reservations];
+
+        return response()->json($response);
+    }
+
+    /**
+     * Return all stores for a specific user id
+     *
+     * @return JSON
+     */
+    public function stores(Request $request) {
+        // Grab Data From Request
+        $user_id = $request->input('user_id');  // User ID
+        
+        // Retrieve User
+        $user = User::where('id', $user_id)->first();
+
+        // Validate User Exist
+        if ($user) {
+            // Retrieve Stores For User
+            $stores = $user->stores;
+            $status = 'success';
+        }
+        else {
+            $status = 'failed: user does not exist';
+        }
+
+        $response = ['status' => $status,
+                     'stores' => $stores];
 
         return response()->json($response);
     }
