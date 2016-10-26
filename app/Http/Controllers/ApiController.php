@@ -194,7 +194,8 @@ class ApiController extends Controller
 
       $response = [
         'code' => 200,
-        'status' => 'Successful'
+        'status' => 'Successful',
+        'data' => ['user_id' => $user->id]
       ];
 
       return response()->json($response);
