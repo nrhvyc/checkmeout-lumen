@@ -29,9 +29,13 @@ class UserController extends Controller
         // Validate User Exist
         if ($user) {
             // Retrieve Items For User Not Checked In
-            $items = Reservation::where('user_id', $user->id)
+            $reservations = Reservation::where('user_id', $user->id)
                                 ->where('checkin_time', NULL)
                                 ->get();
+            $items = [];
+            foreach($reservations as $reservation) {
+                array_push($items, $reservation->item);
+            }
 
             $status = 'success';
         }
