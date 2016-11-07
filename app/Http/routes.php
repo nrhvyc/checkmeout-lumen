@@ -30,7 +30,7 @@ $app->group(['prefix'     => 'kiosk',
 $app->get('login', 'ApiController@login');
 
 // For use with the web app
-$app->group(['middleware' => 'google_oauth',
+$app->group(['middleware' => ['google_oauth', 'cors'],
              'namespace'  => 'App\Http\Controllers'], function () use ($app) {
 
     function rest($path, $controller)

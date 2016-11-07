@@ -23,6 +23,7 @@ class ComposerStaticInite0f06217ad86a32e83819e75678e6d3a
         array (
             'phpseclib\\' => 10,
             'phpDocumentor\\Reflection\\' => 25,
+            'palanik\\lumen\\Middleware\\' => 25,
         ),
         'Z' => 
         array (
@@ -126,6 +127,10 @@ class ComposerStaticInite0f06217ad86a32e83819e75678e6d3a
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'palanik\\lumen\\Middleware\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/palanik/lumen-cors',
         ),
         'Zend\\Diactoros\\' => 
         array (

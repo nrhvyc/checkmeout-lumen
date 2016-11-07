@@ -10,7 +10,8 @@
         "vlucas/phpdotenv": "~2.2",
         "laravel/passport": "^1.0",
         "dusterio/lumen-passport": "^0.1.2",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "palanik/lumen-cors": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
