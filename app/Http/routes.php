@@ -27,7 +27,8 @@ $app->group(['prefix'     => 'kiosk',
 
 
 // Used by frontend app to login with passed email and google token id
-$app->get(['middleware' => 'cors'], function () use ($app) {
+$app->group(['middleware' => 'cors',
+             'namespace'  => 'App\Http\Controllers'], function () use ($app) {
     $app->get('login', 'ApiController@login');
 });
 
