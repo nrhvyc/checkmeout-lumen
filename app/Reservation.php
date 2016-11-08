@@ -14,4 +14,9 @@ class Reservation extends Model
     protected $fillable = [
         'user_id', 'item_id', 'checkout_time', 'checkin_time'
     ];
+
+    // Relationships
+    public function item() {
+        return $this->belongsTo('App\Item');
+    }
 }
