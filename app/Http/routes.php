@@ -23,6 +23,7 @@ $app->group(['prefix'     => 'kiosk',
 
     $app->get('reservation', 'ReservationController@index');
     $app->get('item', 'ItemController@index');
+    $app->get('users', 'ApiController@users');
 });
 
 

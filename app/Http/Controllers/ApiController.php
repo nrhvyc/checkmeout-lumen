@@ -202,6 +202,30 @@ class ApiController extends Controller
     }
 
     /**
+     * Return all users and their card id's 
+     *
+     * @return JSON
+     */
+    public function users() {
+        // Retrieve User
+        $users = User::all();
+
+        $usersTags = [];
+
+        foreach ($users as $user) {
+            array_push($usersTags, ['id' => $user->id,
+                                    'first_name'=> $user->first_name,
+                                    'last_name'=> $user->last_name,
+                                    'card_id' => $user->card_id]);
+        }
+
+
+        $response = ['users' => $usersTags];
+
+        return response()->json($response);
+    }
+
+    /**
      * Determine whether item is currently checked out
      *
      * @return Boolean
