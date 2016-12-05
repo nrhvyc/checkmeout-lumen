@@ -61,15 +61,17 @@ class StoreController extends Controller
 
             // NEED TO VALIDATE THE USER HAS RIGHTS TO ADD THIS
             if ($user && $store) {
-                $store->users()->attach($user_id);
+                if (!$store->users()->where('user_id', $user_id)->exists()) {
+                    $store->users()->attach($user_id);
+                }
                 $status = 'success';
             }
         } else {
             $response = [
-            'code' => 400,
-            'status' => 'Bad Request',
-            'data' => [],
-            'message' => 'token info not provided'
+                'code' => 400,
+                'status' => 'Bad Request',
+                'data' => [],
+                'message' => 'token info not provided'
             ];
             return response()->json($response, $response['code']);
         }

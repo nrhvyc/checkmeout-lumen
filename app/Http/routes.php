@@ -32,7 +32,6 @@ $app->group(['middleware' => 'cors',
              'namespace'  => 'App\Http\Controllers'], function () use ($app) {
     $app->get('login', 'ApiController@login');
 });
-$app->get('item/search', 'ItemController@search');
 // For use with the web app
 $app->group(['middleware' => ['google_oauth', 'cors'],
              'namespace'  => 'App\Http\Controllers'], function () use ($app) {
@@ -64,7 +63,8 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
     rest('/reservation', 'ReservationController');
 
     // Item Endpoint Routes
-    
+
     rest('/item', 'ItemController');
+    $app->get('item/search', 'ItemController@search');
 
 });
