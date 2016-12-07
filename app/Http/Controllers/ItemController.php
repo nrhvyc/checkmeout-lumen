@@ -65,7 +65,7 @@ class ItemController extends Controller
                     if ($curr_item->checkin_time != NULL) {
                         $item->put('checked_out', 'true');
                     } else {
-                        $item->put('checked_out' => 'false');
+                        $item->put('checked_out', 'false');
                     }
                     array_push($items, $item->all());
                 }
