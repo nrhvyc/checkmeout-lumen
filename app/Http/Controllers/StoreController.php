@@ -95,7 +95,22 @@ class StoreController extends Controller
 
         // Validate Store Exist
         if ($store) {
-            $items = $store->items;
+            $temp_items = $store->items;
+            $items = [];
+
+            foreach($temp_items as $item) {
+                $curr_item = Reservation::where('item_id', $item->id)
+                                        ->orderBy('checkout_time', 'desc')
+                                        ->first()
+                                        ->toArray();
+                $arr_item = $item->toArray();
+                if ($curr_item && $curr_item['checkin_time'] == NULL) {
+                    $arr_item['checked_out'] = 'true';
+                } else {
+                    $arr_item['checked_out'] = 'false';
+                }
+                array_push($items, $arr_item);
+            }
             $status = 'success';
         }
         else {
