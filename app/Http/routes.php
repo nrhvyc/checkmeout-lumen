@@ -43,7 +43,7 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
         $app->get($path, $controller.'@index');
         $app->get($path.'/show/{id}', $controller.'@show');
         $app->get($path + '/save', $controller.'@save');
-        $app->put($path.'/update/{id}', $controller.'@update');
+        $app->get($path.'/update/{id}', $controller.'@update');
         $app->delete($path.'/delete/{id}', $controller.'@delete');
     }
 
