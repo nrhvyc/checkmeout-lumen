@@ -101,8 +101,16 @@ class StoreController extends Controller
             foreach($temp_items as $item) {
                 $curr_item = Reservation::where('item_id', $item->id)
                                         ->orderBy('checkout_time', 'desc')
-                                        ->first()
-                                        ->toArray();
+                                        ->first();
+                if (!$curr_item) {
+                    $status = 'success';
+                    $response = ['status' => $status,
+                                 'items' => []];
+
+                    return response()->json($response);
+                }
+                $curr_item = $curr_item->toArray();
+
                 $arr_item = $item->toArray();
                 if ($curr_item && $curr_item['checkin_time'] == NULL) {
                     $arr_item['checked_out'] = 'true';
