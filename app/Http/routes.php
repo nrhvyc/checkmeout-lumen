@@ -66,6 +66,6 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
 
     rest('/item', 'ItemController');
     $app->get('item/search', 'ItemController@search');
-    $app->get('item/status', 'ItemController@status');
+    $app->get('item/status', 'ItemController@status');    
 
 });
