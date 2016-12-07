@@ -63,12 +63,13 @@ class ItemController extends Controller
                                             ->orderBy('checkout_time', 'desc')
                                             ->first()
                                             ->toArray();
-                    if ($curr_item['checkin_time'] != NULL) {
-                        $curr_item['checked_out'] = 'true';
+                    $arr_item = $item->toArray();
+                    if ($curr_item && $curr_item['checkin_time'] == NULL) {
+                        $arr_item['checked_out'] = 'true';
                     } else {
-                        $curr_item['checked_out'] = 'false';
+                        $arr_item['checked_out'] = 'false';
                     }
-                    array_push($items, $curr_item);
+                    array_push($items, $arr_item);
                 }
             }
             $response = [
