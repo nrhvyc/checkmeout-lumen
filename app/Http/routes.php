@@ -50,6 +50,7 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
     // User Endpoint Routes
     $app->get('user/checked_out_items', 'UserController@checkedOutItems');
     $app->get('user/stores', 'UserController@stores');
+    $app->get('user/owned_stores', 'UserController@owned_stores');
     rest('/user', 'UserController');
 
     // Store Endpoint Routes

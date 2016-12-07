@@ -104,4 +104,32 @@ class UserController extends Controller
 
         return response()->json($response);
     }
+
+    /**
+     * Return all stores owned by a specific user
+     *
+     * @return JSON
+     */
+    public function owned_stores(Request $request) {
+        // Grab Data From Request
+        $user_id = $request->input('user_id');  // User ID
+
+        // Retrieve User
+        $user = User::where('id', $user_id)->first();
+
+        // Validate User Exist
+        if ($user) {
+            // Retrieve Stores For User
+            $stores = Store::where('user_id', $user_id)->get();
+            $status = 'success';
+        }
+        else {
+            $status = 'failed: user does not exist';
+        }
+
+        $response = ['status' => $status,
+                     'stores' => $stores];
+
+        return response()->json($response);
+    }
 }

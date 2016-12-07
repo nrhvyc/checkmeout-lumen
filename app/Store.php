@@ -12,7 +12,7 @@ class Store extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'img_url', 'location'
+        'user_id', 'name', 'img_url', 'location'
     ];
 
     //Relationships
