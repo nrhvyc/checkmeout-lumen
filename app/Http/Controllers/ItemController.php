@@ -59,15 +59,16 @@ class ItemController extends Controller
             foreach($stores as $store) {
                 $temp_items = $store->items;
                 foreach($temp_items as $item) {
+                    $stripped_item = $item->get();
                     $curr_item = Reservation::where('item_id', $item->id)
                                             ->orderBy('checkout_time', 'desc')
                                             ->first();
                     if ($curr_item->checkin_time != NULL) {
-                        array_push($item, ['checked_out' => 'true']);
+                        array_push($stripped_item, ['checked_out' => 'true']);
                     } else {
-                        array_push($item, ['checked_out' => 'false']);
+                        array_push($stripped_item, ['checked_out' => 'false']);
                     }
-                    array_push($items, $item);
+                    array_push($items, $stripped_item);
                 }
             }
             $response = [
