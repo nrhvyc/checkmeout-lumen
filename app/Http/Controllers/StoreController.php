@@ -80,4 +80,31 @@ class StoreController extends Controller
 
         return response()->json($response);
     }
+
+    /**
+     * Return items for a specific store_id
+     *
+     * @return JSON
+     */
+    public function items(Request $request) {
+        // Grab Data From Request
+        $store_id = $request->input('store_id');  // Store ID
+
+        // Retrieve User
+        $store = Store::where('id', $store_id)->first();
+
+        // Validate Store Exist
+        if ($store) {
+            $items = $store->items;
+            $status = 'success';
+        }
+        else {
+            $status = 'failed: user does not exist';
+        }
+
+        $response = ['status' => $status,
+                     'items' => $items];
+
+        return response()->json($response);
+    }
 }
