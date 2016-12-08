@@ -130,4 +130,31 @@ class StoreController extends Controller
 
         return response()->json($response);
     }
+
+    /**
+     * Update store info
+     *
+     * @return JSON
+     */
+    public function update(Request $request) {
+        // Name, location, img_url
+        $store_id = $request->input("store_id");
+
+        $store = Store::where('id', $store_id)->first();
+
+        if ($store) {
+            $store->name = $request->input('name');
+            $store->location = $request->input('location');
+            $store->img_url = $request->input('img_url');
+
+            $store->save();
+
+            $status = 'success';
+        } else {
+            $status = 'failed: store does not exist';
+        }
+        $response = ['status' => $status];
+
+        return response()->json($response);
+    }
 }

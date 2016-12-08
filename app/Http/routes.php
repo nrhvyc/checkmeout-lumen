@@ -70,3 +70,5 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
     rest('/item', 'ItemController');
 
 });
+
+$app->get('store/update', 'StoreController@update');
