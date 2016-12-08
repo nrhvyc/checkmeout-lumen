@@ -59,6 +59,7 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
     $app->get('store/users', 'StoreController@users');
     $app->get('store/add_user', 'StoreController@addUser');
     $app->get('store/items', 'StoreController@items');
+    $app->get('store/update', 'StoreController@update');
     rest('/store', 'StoreController');
 
     // Reservation Endpoint Routes
@@ -70,5 +71,3 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
     rest('/item', 'ItemController');
 
 });
-
-$app->get('store/update', 'StoreController@update');
