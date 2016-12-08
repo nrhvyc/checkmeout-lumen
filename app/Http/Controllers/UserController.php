@@ -121,6 +121,12 @@ class UserController extends Controller
         if ($user) {
             // Retrieve Stores For User
             $stores = Store::where('user_id', $user_id)->get();
+            if (!$stores) {
+                $response = ['status' => $status,
+                             'stores' => []];
+
+                return response()->json($response);
+            }
             $status = 'success';
         }
         else {
