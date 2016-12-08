@@ -68,7 +68,7 @@ $app->group(['middleware' => ['google_oauth', 'cors'],
     // Item Endpoint Routes
     $app->get('item/search', 'ItemController@search');
     $app->get('item/status', 'ItemController@status');
-    $app->get('item/add', 'ItemController@add');
     rest('/item', 'ItemController');
 
 });
+$app->get('item/add', 'ItemController@add');

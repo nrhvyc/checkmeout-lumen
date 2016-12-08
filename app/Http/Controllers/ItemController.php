@@ -127,6 +127,15 @@ class ItemController extends Controller
 
         $item->save();
 
+        $res = new Reservation;
+
+        $res->user_id = NULL;
+        $res->item_id = $item->id;
+        $res->checkout_time = "2015-12-01 12:00:00";
+        $res->checkin_time = "2015-12-01 12:00:00";
+
+        $res->save();
+
         $status = 'success';
 
         $response = ['status' => $status];
