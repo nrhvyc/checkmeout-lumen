@@ -110,4 +110,27 @@ class ItemController extends Controller
           return response()->json($response);
         }
     }
+
+    /**
+     * Update store info
+     *
+     * @return JSON
+     */
+    public function add(Request $request) {
+
+        $item = new Item;
+
+        $item->name = $request->input('name');
+        $item->tag_id = $request->input('tag_id');
+        $item->store_id = $request->input('store_id');
+        $item->img_url = $request->input('img_url');
+
+        $item->save();
+
+        $status = 'success';
+
+        $response = ['status' => $status];
+
+        return response()->json($response);
+    }
 }
