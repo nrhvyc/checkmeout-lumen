@@ -102,13 +102,13 @@ class StoreController extends Controller
                 $curr_item = Reservation::where('item_id', $item->id)
                                         ->orderBy('checkout_time', 'desc')
                                         ->first();
-                // if (!$curr_item) {
-                //     $status = 'success';
-                //     $response = ['status' => $status,
-                //                  'items' => []];
-                //
-                //     return response()->json($response);
-                // }
+                if (!$curr_item) {
+                    $status = 'success';
+                    $response = ['status' => $status,
+                                 'items' => []];
+
+                    return response()->json($response);
+                }
                 $curr_item = $curr_item->toArray();
 
                 $arr_item = $item->toArray();
